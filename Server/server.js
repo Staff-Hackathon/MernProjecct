@@ -49,10 +49,12 @@ app.use((request, response, next) => {
 // add the application routes
 const userRouter = require('./routes/user')
 const feedbackRouter = require('./routes/feedback')
+const tfeedbackRouter = require('./routes/tfeedback')
+
 
 app.use('/user', userRouter)
 app.use('/feedback', feedbackRouter)
-
+app.use('/tfeedback', tfeedbackRouter)
 // start listening on port 4000
 app.listen(4000, () => {
   console.log('server started on port 4000')
