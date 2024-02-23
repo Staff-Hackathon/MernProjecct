@@ -1,0 +1,7 @@
+create table feedback(fid int KEY NOT NULL AUTO_INCREMENT, uid int, type varchar(255), course varchar(255), sdate varchar(255), edate varchar(255));
+
+create table lab(lid int KEY NOT NULL AUTO_INCREMENT, fid int, sid int, availability int, techcomp int, comm_presentation int, punctuality int);
+
+create table theory(thid int KEY NOT NULL AUTO_INCREMENT, fid int, sid int, comm int, responsive_Interation int, lecture_material int, practice_question int, level_assessment int);
+
+create table infra(infraid int KEY NOT NULL AUTO_INCREMENT, fid int, sid int, computing_facilities int, software_facilities int, non_computing_infrastructure int);
