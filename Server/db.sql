@@ -8,3 +8,12 @@ create table user (
     createdTime timestamp default CURRENT_TIMESTAMP, 
     role varchar(10)
 );
+
+create table feedback (
+    fid integer primary key auto_increment,
+    uid integer,
+    type varchar(50),
+    course varchar(50),
+    sdate date,
+    edate date
+);

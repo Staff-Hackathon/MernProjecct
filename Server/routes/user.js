@@ -41,20 +41,22 @@ router.post('/signin', (request, response) => {
   const { email, password } = request.body
 
   const encryptedPassword = String(cryptoJs.SHA1(password))
-  const query = `select id, firstName, lastName, profileImage from user where email = ? and password = ?`
+  const query = `select id, firstName, lastName, createdTime, role, profileImage from user where email = ? and password = ?`
   db.query(query, [email, encryptedPassword], (error, users) => {
     if (error) {
       response.send(utils.createErrorResult(error))
     } else if (users.length === 0) {
       response.send(utils.createErrorResult('user not found'))
     } else {
-      const { firstName, lastName, id, profileImage } = users[0]
-      const payload = { firstName, lastName, id }
+      const { firstName, lastName, role, id, createdTime, profileImage } = users[0]
+      const payload = { firstName, lastName, createdTime, role, id }
       const token = jwt.sign(payload, config.secret)
       response.send(
         utils.createSuccessResult({
           firstName,
           lastName,
+          role,
+          createdTime,
           token,
           profileImage,
         })
