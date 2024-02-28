@@ -28,7 +28,8 @@ create table feedback (
     course varchar(50),
     sdate date,
     edate date,
-    rating float(3, 2)
+    rating float(3, 2),
+    FOREIGN KEY (uid) REFERENCES user(id)
 );
 
 create table Tfeedback (
@@ -39,9 +40,24 @@ create table Tfeedback (
     queries_solved integer,
     Initiative integer,
     responsiveness integer,
+    total float(3, 2),
     FOREIGN KEY (fid) REFERENCES feedback(fid),
     FOREIGN KEY (sid) REFERENCES user(id)
 );
+
+
+DELIMITER //
+CREATE TRIGGER after_tfeedback_insert
+AFTER INSERT ON tfeedback
+FOR EACH ROW
+BEGIN
+    DECLARE avg_rating DECIMAL(10,2);
+    SELECT AVG(total) INTO avg_rating FROM tfeedback;
+
+    UPDATE feedback SET rating = avg_rating WHERE fid = NEW.fid;
+END;
+//
+DELIMITER ;
 
 
 -- To clear mysql terminal screen \! cls
