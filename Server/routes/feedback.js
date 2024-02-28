@@ -20,4 +20,15 @@ router.get('/all', (request, response) => {
   })
 })
 
+router.get('/bycourse', (request, response) => {
+  const { course, date } = request.body
+  const query = `select * from feedback where course = ? and ? BETWEEN sdate AND edate;`
+  db.query(query, [course, date], (error, feedback) => {
+    response.send(utils.createResult(error, feedback))
+  })
+})
+
+
+
+
 module.exports = router
