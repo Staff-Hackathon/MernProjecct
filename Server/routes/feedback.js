@@ -14,7 +14,7 @@ router.post('/', (request, response) => {
 })
 
 router.get('/all', (request, response) => {
-  const query = `select fid as id, course, sdate, edate, type, uid from feedback`
+  const query = `select fid as id, course, sdate, edate, type, rating, uid from feedback`
   db.query(query, (error, feedback) => {
     response.send(utils.createResult(error, feedback))
   })

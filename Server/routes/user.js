@@ -65,6 +65,12 @@ router.post('/signin', (request, response) => {
   })
 })
 
+router.get('/allfaculties', (request, response) => {
+  const query = `select id as uid, firstName, lastName, email from user where role = "staff"`
+  db.query(query, (error, user) => {
+    response.send(utils.createResult(error, user))
+  })
+})
 
 
 
