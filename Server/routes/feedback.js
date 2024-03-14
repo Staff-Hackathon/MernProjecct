@@ -20,6 +20,14 @@ router.get('/all', (request, response) => {
   })
 })
 
+router.get('/:id', (request, response) => {
+  const { id } = request.params
+  const query = `select fid as id, course, sdate, edate, type, rating from feedback where uid = ?`
+  db.query(query, id, (error, feedback) => {
+    response.send(utils.createResult(error, feedback))
+  })
+})
+
 router.get('/bycourse', (request, response) => {
   const { course, date } = request.body
   const query = `select * from feedback where course = ? and ? BETWEEN sdate AND edate;`
