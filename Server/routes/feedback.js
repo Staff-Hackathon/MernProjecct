@@ -14,8 +14,16 @@ router.post('/', (request, response) => {
 })
 
 router.get('/all', (request, response) => {
-  const query = `select fid as id, course, sdate, edate, type, uid from feedback`
+  const query = `select fid as id, course, sdate, edate, type, rating, uid from feedback`
   db.query(query, (error, feedback) => {
+    response.send(utils.createResult(error, feedback))
+  })
+})
+
+router.get('/:id', (request, response) => {
+  const { id } = request.params
+  const query = `select fid as id, course, sdate, edate, type, rating from feedback where uid = ?`
+  db.query(query, id, (error, feedback) => {
     response.send(utils.createResult(error, feedback))
   })
 })

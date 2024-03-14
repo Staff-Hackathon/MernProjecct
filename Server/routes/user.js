@@ -53,18 +53,25 @@ router.post('/signin', (request, response) => {
       const token = jwt.sign(payload, config.secret)
       response.send(
         utils.createSuccessResult({
+          id,
           firstName,
           lastName,
           role,
           createdTime,
           token,
-          profileImage,
+          profileImage
         })
       )
     }
   })
 })
 
+router.get('/allfaculties', (request, response) => {
+  const query = `select id as uid, firstName, lastName, email from user where role = "staff"`
+  db.query(query, (error, user) => {
+    response.send(utils.createResult(error, user))
+  })
+})
 
 
 
