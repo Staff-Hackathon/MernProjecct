@@ -28,11 +28,12 @@ router.get('/:id', (request, response) => {
   })
 })
 
-router.get('/bycourse', (request, response) => {
+router.post('/bycourse', (request, response) => {
   const { course, date } = request.body
-  const query = `select * from feedback where course = ? and ? BETWEEN sdate AND edate;`
-  db.query(query, [course, date], (error, feedback) => {
-    response.send(utils.createResult(error, feedback))
+  const query = `select fid as id, course, sdate, edate, type from feedback where course = ? and ? BETWEEN sdate AND edate;`
+  db.query(query, [course, date], (error, result) => {
+    console.log(result)
+    response.send(utils.createResult(error, result))
   })
 })
 
