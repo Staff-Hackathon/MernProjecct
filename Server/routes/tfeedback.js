@@ -12,5 +12,12 @@ router.post('/:fid', (request, response) => {
   })
 })
 
+router.get('/:sid', (request, response) => {
+  const { sid } = request.params
+  const query = `select distinct fid from tfeedback where sid = ?`
+  db.query(query, sid, (error, feedback) => {
+    response.send(utils.createResult(error, feedback))
+  })
+})
 
 module.exports = router
