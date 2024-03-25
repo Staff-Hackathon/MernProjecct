@@ -24,14 +24,11 @@ router.post(
 )
 
 router.post('/signup', (request, response) => {
-  const { firstName, lastName, email, password, role } = request.body
+  const { firstName, lastName, email, password, role, course } = request.body
 
   const encryptedPassword = String(cryptoJs.SHA1(password))
-  const query = `insert into user (firstName, lastName, email, password, role) values (?, ?, ?, ?, ?)`
-  db.query(
-    query,
-    [firstName, lastName, email, encryptedPassword, role],
-    (error, result) => {
+  const query = `insert into user (firstName, lastName, email, password, role, course) values (?, ?, ?, ?, ?, ?)`
+  db.query( query,[firstName, lastName, email, encryptedPassword, role, course], (error, result) => {
       response.send(utils.createResult(error, result))
     }
   )
@@ -52,16 +49,7 @@ router.post('/signin', (request, response) => {
       const payload = { firstName, lastName, createdTime, role, course, id }
       const token = jwt.sign(payload, config.secret)
       response.send(
-        utils.createSuccessResult({
-          id,
-          firstName,
-          lastName,
-          role,
-          course,
-          createdTime,
-          token,
-          profileImage
-        })
+        utils.createSuccessResult({ id, firstName, lastName, role, course, createdTime, token, profileImage })
       )
     }
   })
