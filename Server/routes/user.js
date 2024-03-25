@@ -74,6 +74,12 @@ router.get('/allfaculties', (request, response) => {
   })
 })
 
+router.get('/allcourses', (request, response) => {
+  const query = `select cid, cname from course where cid IS NOT NULL`
+  db.query(query, (error, user) => {
+    response.send(utils.createResult(error, user))
+  })
+})
 
 
 module.exports = router

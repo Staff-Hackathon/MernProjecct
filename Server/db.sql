@@ -9,7 +9,7 @@ use staffhackathon;
 show tables;
 
 
-create table user (
+CREATE TABLEuser (
     id integer primary key auto_increment,
     firstName varchar(50),
     lastName varchar(50),
@@ -21,7 +21,7 @@ create table user (
     course varchar(20)
 );
 
-create table feedback (
+CREATE TABLEfeedback (
     fid integer primary key auto_increment,
     uid integer,
     type varchar(50),
@@ -32,7 +32,7 @@ create table feedback (
     FOREIGN KEY (uid) REFERENCES user(id)
 );
 
-create table Tfeedback (
+CREATE TABLETfeedback (
     tid integer primary key auto_increment,
     fid integer,
     sid integer,
@@ -45,6 +45,11 @@ create table Tfeedback (
     FOREIGN KEY (sid) REFERENCES user(id)
 );
 
+CREATE TABLE course (
+    cid integer primary key auto_increment,
+    cname varchar(50)
+);
+INSERT INTO course values(1, 'OM-58'), (2, 'PH-27'), (3, 'PM-30');
 
 DELIMITER //
 CREATE TRIGGER after_tfeedback_insert
